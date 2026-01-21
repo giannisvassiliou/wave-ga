@@ -32,8 +32,7 @@ The repository follows a simple and reproducible layout:
 │   ├── ultra_fast_streaming_de_*.py
 │   ├── linear_streaming_classifiers.py
 │   └── supporting utilities
-│   ├── weatherAUS.csv        # optional, user-provided
-│   └── other local datasets
+│   ├── weatherAUS.csv       # user-provided
 └── README.md
 ```
 
