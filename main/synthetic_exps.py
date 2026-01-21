@@ -21,7 +21,7 @@ from sklearn.linear_model import SGDClassifier
 from scipy import stats as scipy_stats
 import time
 import warnings
-from openai._module_client import models
+#from openai._module_client import models
 warnings.filterwarnings('ignore')
 from river import tree, ensemble, forest,metrics
 
