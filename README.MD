@@ -31,7 +31,7 @@ The repository follows a simple and reproducible layout:
 │   ├── ultra_fast_wave_ga_*.py
 │   ├── ultra_fast_streaming_de_*.py
 │   ├── linear_streaming_classifiers.py
-│   └── supporting utilities
+│   └── *
 │   ├── weatherAUS.csv       # user-provided
 └── README.md
 ```
@@ -40,7 +40,7 @@ The repository follows a simple and reproducible layout:
 - **`lib&data/`** contains Wave-GA implementations, baselines, and shared utilities
               ** contains local datasets (optional; some streams auto-download)
 
-All experiments are designed to run **directly from the `main/` folder**.
+All experiments are designed to run **directly  with ALL THE LIBRARIES PRESENT IN THE SAME FOLDER**.
 
 ---
 
