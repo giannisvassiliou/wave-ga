@@ -27,23 +27,19 @@ The repository follows a simple and reproducible layout:
 │   ├── elect2.py
 │   └── weather.py
 │
-├── lib/
+├── lib&data/
 │   ├── ultra_fast_wave_ga_*.py
 │   ├── ultra_fast_streaming_de_*.py
 │   ├── linear_streaming_classifiers.py
 │   └── supporting utilities
-│
-├── data/
 │   ├── weatherAUS.csv        # optional, user-provided
 │   └── other local datasets
-│
-├── GECCO_2026_Wave_GA_FINAL.pdf
 └── README.md
 ```
 
 - **`main/`** contains all **entry-point experiment scripts**
-- **`lib/`** contains Wave-GA implementations, baselines, and shared utilities
-- **`data/`** contains local datasets (optional; some streams auto-download)
+- **`lib&data/`** contains Wave-GA implementations, baselines, and shared utilities
+              ** contains local datasets (optional; some streams auto-download)
 
 All experiments are designed to run **directly from the `main/` folder**.
 
@@ -52,9 +48,6 @@ All experiments are designed to run **directly from the `main/` folder**.
 ## Repository contents
 
 ### Core files
-
-- `GECCO_2026_Wave_GA_FINAL.pdf`  
-  Full paper describing the Wave-GA method, motivation, and experimental results.
 
 - `main/synthetic_exps.py`  
   Synthetic streaming experiments and ablations, including:
@@ -109,15 +102,6 @@ Predictions are made via:
 
 ---
 
-## Installation
-
-### Create environment
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install --upgrade pip
-```
 
 ### Install dependencies
 
@@ -208,18 +192,3 @@ Results are averaged over multiple runs and accompanied by statistical tests.
 - Explicit multi-run evaluation baked into each experiment script
 
 ---
-
-## Citation
-
-If you use this code, please cite:
-
-```
-Wave-GA: Cyclical Evolutionary Optimization for Streaming Classification with Emerging Labels
-Anonymous Author(s), GECCO 2026 (submission)
-```
-
----
-
-## License
-
-Add your chosen license (e.g., MIT, Apache-2.0, BSD-3-Clause).
