@@ -11,7 +11,6 @@ Features:
 4. Statistical significance tests (t-tests) at the end
 5. Reports mean ± std for BA, F1, MinF1
 6. Comprehensive metrics and runtime comparison
-- Fair comparison: same population size, generations, fitness function as Wave-GA
 """
 import scikit_posthocs as sp
 
