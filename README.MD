@@ -15,26 +15,64 @@ The method evolves a **single linear weight matrix** using **class-focused train
 
 ---
 
-## Repository contents
+## Repository structure
 
-The repository includes the paper PDF and all experiment drivers used in the empirical evaluation.
+The repository follows a simple and reproducible layout:
+
+```
+.
+├── main/
+│   ├── synthetic_exps.py
+│   ├── airlines.py
+│   ├── elect2.py
+│   └── weather.py
+│
+├── lib/
+│   ├── ultra_fast_wave_ga_*.py
+│   ├── ultra_fast_streaming_de_*.py
+│   ├── linear_streaming_classifiers.py
+│   └── supporting utilities
+│
+├── data/
+│   ├── weatherAUS.csv        # optional, user-provided
+│   └── other local datasets
+│
+├── GECCO_2026_Wave_GA_FINAL.pdf
+└── README.md
+```
+
+- **`main/`** contains all **entry-point experiment scripts**
+- **`lib/`** contains Wave-GA implementations, baselines, and shared utilities
+- **`data/`** contains local datasets (optional; some streams auto-download)
+
+All experiments are designed to run **directly from the `main/` folder**.
+
+---
+
+## Repository contents
 
 ### Core files
 
 - `GECCO_2026_Wave_GA_FINAL.pdf`  
   Full paper describing the Wave-GA method, motivation, and experimental results.
 
-- `synthetic_exps.py`  
-  Synthetic streaming experiments and ablations, including severe drift, recurring drift, sudden drift, cycling classes, and extreme class imbalance. Includes Wave-GA, ablations, and evolutionary baselines with statistical testing.
+- `main/synthetic_exps.py`  
+  Synthetic streaming experiments and ablations, including:
+  - Severe drift
+  - Recurring drift
+  - Sudden drift
+  - Cycling classes
+  - Extreme class imbalance  
+  Includes Wave-GA, ablations, and evolutionary baselines with statistical testing.
 
-- `airlines.py`  
-  Real-world streaming experiment on the Airlines dataset.
+- `main/airlines.py`  
+  Real-world streaming experiment on the **Airlines** dataset.
 
-- `elect2.py`  
-  Real-world streaming experiment on the Electricity Market (Elec2) dataset.
+- `main/elect2.py`  
+  Real-world streaming experiment on the **Electricity Market (Elec2)** dataset.
 
-- `weather.py`  
-  Real-world streaming experiment on a Weather dataset (e.g., `weatherAUS.csv`).
+- `main/weather.py`  
+  Real-world streaming experiment on a **Weather** dataset (e.g., `weatherAUS.csv`).
 
 ---
 
@@ -42,26 +80,32 @@ The repository includes the paper PDF and all experiment drivers used in the emp
 
 Wave-GA maintains and evolves a **linear multiclass classifier** with weight matrix:
 
+```
 W ∈ ℝ^(C × d)
+```
 
 Predictions are made via:
 
+```
 ŷ = argmax_c (w_cᵀ x)
+```
 
 ### Key components
 
 1. **Class-focused training waves**  
-   Training proceeds in cyclical waves, each focusing on a specific class to prevent majority domination.
+   Cyclical optimization phases ensure sustained pressure on minority and emerging classes.
 
 2. **Blended minority-aware fitness**  
 
+   ```
    F(h) = α · f_class(h, c*) + (1 − α) · f_overall(h)
+   ```
 
 3. **Per-class replay buffers**  
-   Buffers mitigate catastrophic forgetting and improve drift adaptation.
+   Reduce catastrophic forgetting and improve adaptation to drift.
 
 4. **Dynamic class expansion**  
-   New classes trigger expansion of the weight matrix while preserving learned parameters.
+   The model expands automatically when unseen labels appear in the stream.
 
 ---
 
@@ -85,35 +129,75 @@ pip install numpy scipy pandas matplotlib scikit-learn river scikit-posthocs
 
 ## Running experiments
 
+### Important notes
+
+- **No command-line flags are required**
+- Each experiment script runs **out of the box**
+- Scripts automatically:
+  - execute multiple runs
+  - report aggregate statistics
+  - print runtime measurements
+
 ### Synthetic experiments
 
 ```bash
+cd main
 python synthetic_exps.py
 ```
 
-### Electricity Market
-
-```bash
-python elect2.py
-```
-
-### Airlines
-
-```bash
-python airlines.py
-```
-
-### Weather
-
-```bash
-python weather.py
-```
+Runs all synthetic benchmarks, ablations, and baselines, and reports:
+- mean ± std performance
+- statistical significance tests
+- total and per-run execution time
 
 ---
 
-## Evaluation
+### Electricity Market (Elec2)
 
-Experiments follow a **prequential (test-then-train)** protocol and report metrics such as Balanced Accuracy and F1. Results are averaged across multiple runs with statistical tests.
+```bash
+cd main
+python elect2.py
+```
+
+- Automatically loads or downloads the dataset
+- Reports accuracy metrics, statistical summaries, and runtime
+
+---
+
+### Airlines dataset
+
+```bash
+cd main
+python airlines.py
+```
+
+- Uses a local `airlines.csv` if available, otherwise falls back to automatic loading
+- Reports full statistical summaries and runtime
+
+---
+
+### Weather dataset
+
+```bash
+cd main
+python weather.py
+```
+
+- Expects a local CSV file (e.g., `weatherAUS.csv`) in `data/`
+- Reports performance metrics, statistics, and runtime
+
+---
+
+## Evaluation protocol
+
+All experiments use a **prequential (test-then-train)** streaming evaluation protocol.
+
+Reported metrics include:
+- Balanced Accuracy (BA)
+- F1 score
+- Minority-F1 / MinF1 (where applicable)
+
+Results are averaged over multiple runs and accompanied by statistical tests.
 
 ---
 
@@ -121,16 +205,21 @@ Experiments follow a **prequential (test-then-train)** protocol and report metri
 
 - Fixed random seeds per run
 - Deterministic data ordering when applicable
+- Explicit multi-run evaluation baked into each experiment script
 
 ---
 
 ## Citation
 
-Wave-GA: Cyclical Evolutionary Optimization for Streaming Classification with Emerging Labels  
+If you use this code, please cite:
+
+```
+Wave-GA: Cyclical Evolutionary Optimization for Streaming Classification with Emerging Labels
 Anonymous Author(s), GECCO 2026 (submission)
+```
 
 ---
 
 ## License
 
-Add your preferred open-source license.
+Add your chosen license (e.g., MIT, Apache-2.0, BSD-3-Clause).
