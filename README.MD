@@ -106,7 +106,8 @@ Predictions are made via:
 ### Install dependencies
 
 ```bash
-pip install numpy scipy pandas matplotlib scikit-learn river scikit-posthocs
+pip install numpy scipy pandas matplotlib scikit-learn river scikit-posthocs numba
+Numba is needed to  speedup the calculations
 ```
 
 ---
